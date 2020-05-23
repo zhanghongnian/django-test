@@ -97,6 +97,9 @@ DATABASES = {
         'PASSWORD': conf['mysql']['password'],
         'HOST': conf['mysql']['host'],
         'PORT': conf['mysql']['port'],
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
 
