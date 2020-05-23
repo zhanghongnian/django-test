@@ -12,6 +12,22 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+import yaml
+import acm
+
+ENDPOINT = "acm.aliyun.com"
+NAMESPACE = "ec9d50c9-3e25-4f6d-b236-620d44f8a839"
+AK = os.getenv('ALI_AK')
+SK = os.getenv('ALI_SK')
+REGION_ID = "cn-shanghai"
+DATA_ID= "django-test"
+GROUP= "DEFAULT_GROUP"
+
+# Initialize ACM client.
+c = acm.ACMClient(ENDPOINT, NAMESPACE, AK, SK)
+c.set_options(kms_enabled=True, region_id=REGION_ID)
+conf = yaml.load(c.get(DATA_ID, GROUP), Loader=yaml.SafeLoader)
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -75,8 +91,12 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': conf['mysql']['database'],
+        'USER': conf['mysql']['user'],
+        'PASSWORD': conf['mysql']['password'],
+        'HOST': conf['mysql']['host'],
+        'PORT': conf['mysql']['port'],
     }
 }
 
