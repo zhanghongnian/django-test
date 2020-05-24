@@ -41,7 +41,7 @@ SECRET_KEY = '%=q6*&!9-bc#r_1u1c36e&-6l(+-3m0u^hm=w+fwkht6$$@%z='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 SHELL_PLUS = 'ipython'
 
